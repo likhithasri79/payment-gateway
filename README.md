@@ -7,9 +7,9 @@ A high-concurrency transaction processing simulator demonstrating production-gra
 ```mermaid
 graph TD
     Client[Merchant Client] -->|1. POST /payments| API[Gateway API]
-    API <-->|2. Check Idempotency| Redis[(Redis Cache)]
-    API <-->|3. Row-Level Lock (FOR UPDATE)| DB[(PostgreSQL)]
-    API -->|4. HTTP Request (Exponential Backoff)| MockBank[Mock Bank API]
+    API <-->|2. Check Idempotency| Redis[Redis Cache]
+    API <-->|3. Row-Level Lock FOR UPDATE| DB[PostgreSQL]
+    API -->|4. HTTP Request Exponential Backoff| MockBank[Mock Bank API]
     MockBank -.->|5. Async Webhook| WebhookHandler[Webhook Endpoint]
     WebhookHandler -->|6. Update State| DB
     ReconJob[Nightly Recon Cron] -->|7. Cross-Check| DB
